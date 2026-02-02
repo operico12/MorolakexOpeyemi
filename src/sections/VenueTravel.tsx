@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Navigation, Heart } from 'lucide-react'; // Removed Plane, Car, Hotel
+import { MapPin, Navigation, Heart, Calendar } from 'lucide-react';
 
 interface EventDay {
   title: string;
   date: string;
+  time: string;
   location: string;
   address: string;
   mapUrl: string;
@@ -12,19 +13,21 @@ interface EventDay {
 
 const eventDetails: EventDay[] = [
   {
-    title: 'Engagement Ceremony',
+    title: 'Traditional Engagement',
     date: 'Friday, October 23, 2026',
+    time: '10:00 AM',
     location: 'Akure, Ondo State',
-    address: 'Family Compound, Alagbaka, Akure',
-    mapUrl: 'https://maps.google.com/?q=Alagbaka+Akure+Ondo+State+Nigeria',
+    address: 'Julie Jane Event Center, Akure',
+    mapUrl: 'https://www.google.com/maps/place/Julie+Jane+Event+Center/@7.2880875,5.1581907,17z/data=!3m1!4b1!4m6!3m5!1s0x10478f5519e29afb:0x5c09312158591d8f!8m2!3d7.2880875!4d5.1607656!16s%2Fg%2F11v3gd8mc9?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D',
     type: 'engagement',
   },
   {
-    title: 'Wedding Reception',
+    title: 'White Wedding Reception',
     date: 'Saturday, October 24, 2026',
+    time: '2:00 PM',
     location: 'Akure, Ondo State',
-    address: 'Jogor Centre, Igbatoro Road, Akure',
-    mapUrl: 'https://maps.google.com/?q=Jogor+Centre+Akure+Ondo+State+Nigeria',
+    address: 'Amazing Place Event Centre, Akure',
+    mapUrl: 'https://www.google.com/maps/place/Amazing+Place+Event+Centre/@7.2266296,5.2122405,17z/data=!4m14!1m7!3m6!1s0x1047855af4b0f29b:0xf9285a949b2e9360!2sAmazing+Place+Event+Centre!8m2!3d7.2266296!4d5.2148154!16s%2Fg%2F11c0xnd14c!3m5!1s0x1047855af4b0f29b:0xf9285a949b2e9360!8m2!3d7.2266296!4d5.2148154!16s%2Fg%2F11c0xnd14c?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D',
     type: 'reception',
   },
 ];
@@ -56,172 +59,214 @@ const VenueTravel = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const activeEvent = eventDetails[activeTab];
+
   return (
     <section
       ref={sectionRef}
       id="venue"
-      className="relative w-full py-16 md:py-20 bg-stone-50 overflow-hidden"
+      className="relative w-full py-20 md:py-24 bg-gradient-to-b from-white via-stone-50 to-white overflow-hidden"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+      
+      {/* Floating Decorations */}
+      <div className="absolute top-20 left-10 opacity-10">
+        <Heart className="w-24 h-24 text-amber-400" fill="currentColor" />
+      </div>
+      <div className="absolute bottom-20 right-10 opacity-10">
+        <Heart className="w-32 h-32 text-amber-400" fill="currentColor" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header - Compact */}
-        <div className="text-center mb-8 md:mb-10">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header - Elegant */}
+        <div className="text-center mb-12">
           <div
-            className={`flex items-center justify-center gap-3 mb-4 transition-all duration-700 ease-out ${
+            className={`inline-flex items-center gap-4 mb-6 transition-all duration-1000 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="h-px w-10 bg-amber-500" />
-            <span className="font-body text-amber-500 text-xs tracking-[0.3em] uppercase">
-              The Location
-            </span>
-            <div className="h-px w-10 bg-amber-500" />
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-amber-400" />
+            <Heart className="w-5 h-5 text-amber-500 animate-pulse" fill="currentColor" />
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-amber-400" />
           </div>
 
-          <h2
-            className={`font-script text-4xl md:text-5xl text-stone-800 mb-3 transition-all duration-700 ease-out ${
+          <p
+            className={`font-body text-amber-600 text-sm tracking-[0.4em] uppercase mb-4 transition-all duration-1000 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '100ms' }}
           >
-            Venue
-          </h2>
+            Join Us
+          </p>
 
-          <div
-            className={`flex items-center justify-center gap-2 transition-all duration-700 ease-out ${
+          <h2
+            className={`font-script text-6xl md:text-7xl lg:text-8xl text-stone-800 mb-2 transition-all duration-1000 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            <Heart className="w-4 h-4 text-amber-500" fill="currentColor" />
-            <div className="h-px w-12 bg-amber-300" />
-            <Heart className="w-4 h-4 text-amber-500" fill="currentColor" />
-          </div>
+            Celebrate
+          </h2>
+          
+          <p
+            className={`font-body text-stone-500 text-lg italic transition-all duration-1000 ease-out ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionDelay: '300ms' }}
+          >
+            Two Days, Two Moments, One Love
+          </p>
         </div>
 
-        {/* Two Day Event Tabs */}
+        {/* Day Selector - Pill Style */}
         <div
-          className={`flex justify-center gap-3 mb-6 transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-          style={{ transitionDelay: '250ms' }}
-        >
-          {eventDetails.map((event, index) => (
-            <button
-              key={event.type}
-              onClick={() => setActiveTab(index)}
-              className={`px-5 py-2.5 rounded-full font-body text-sm transition-all duration-300 ${
-                activeTab === index
-                  ? 'bg-amber-500 text-white shadow-lg'
-                  : 'bg-white text-stone-600 hover:bg-amber-100 border border-stone-200'
-              }`}
-            >
-              {event.type === 'engagement' ? 'Day 1' : 'Day 2'}
-            </button>
-          ))}
-        </div>
-
-        {/* Single Map Card - Centered */}
-        <div
-          className={`transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-          style={{ transitionDelay: '300ms' }}
-        >
-          {eventDetails.map((event, index) => (
-            <div
-              key={event.type}
-              className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 max-w-lg mx-auto ${
-                activeTab === index ? 'block' : 'hidden'
-              }`}
-            >
-              {/* Map Placeholder - Clickable */}
-              <div 
-                onClick={() => openMap(event.mapUrl)}
-                className="relative h-40 bg-stone-100 cursor-pointer group overflow-hidden"
-              >
-                {/* Stylized Map Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-stone-100 to-stone-200">
-                  <div 
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C8C6E' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                    }}
-                  />
-                </div>
-                
-                {/* Center Pin */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="w-14 h-14 bg-amber-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                    <MapPin className="w-7 h-7 text-white" />
-                  </div>
-                  <p className="mt-2 font-body text-xs text-stone-600 bg-white/80 px-3 py-1 rounded-full">
-                    Click to open map
-                  </p>
-                </div>
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-
-              {/* Event Details - Compact */}
-              <div className="p-5 text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className={`px-3 py-1 rounded-full text-xs font-body ${
-                    event.type === 'engagement' 
-                      ? 'bg-rose-100 text-rose-600' 
-                      : 'bg-amber-100 text-amber-600'
-                  }`}>
-                    {event.type === 'engagement' ? 'Engagement' : 'Reception'}
-                  </span>
-                  <span className="text-stone-400 text-xs font-body">{event.date}</span>
-                </div>
-                
-                <h3 className="font-script text-xl text-stone-800 mb-1">
-                  {event.title}
-                </h3>
-                <p className="font-body text-sm text-stone-600 mb-1">{event.location}</p>
-                <p className="font-body text-xs text-stone-500 mb-4">{event.address}</p>
-                
-                <button
-                  onClick={() => openMap(event.mapUrl)}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg font-body text-sm hover:bg-amber-600 transition-all duration-300"
-                >
-                  <Navigation className="w-4 h-4" />
-                  Get Directions
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Help Text */}
-        <div
-          className={`mt-8 text-center transition-all duration-700 ${
+          className={`flex justify-center mb-10 transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
           style={{ transitionDelay: '400ms' }}
         >
-          <p className="font-body text-xs text-stone-500">
-            Need help? Call us at{' '}
-            <a href="tel:+2348012345678" className="text-amber-600 hover:underline">
-              +234 801 234 5678
-            </a>
-          </p>
+          <div className="bg-white p-1.5 rounded-full shadow-lg border border-stone-100">
+            {eventDetails.map((event, index) => (
+              <button
+                key={event.type}
+                onClick={() => setActiveTab(index)}
+                className={`relative px-8 py-3 rounded-full font-body text-sm transition-all duration-500 ${
+                  activeTab === index
+                    ? 'text-white'
+                    : 'text-stone-500 hover:text-stone-700'
+                }`}
+              >
+                {activeTab === index && (
+                  <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full shadow-md" />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Day {index + 1}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-  );
-};
 
-export default VenueTravel;
+        {/* Main Content - Elegant Card */}
+        <div
+          className={`transition-all duration-1000 ease-out ${
+            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
+          style={{ transitionDelay: '500ms' }}
+        >
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-stone-100">
+            {/* Top Banner */}
+            <div className="bg-gradient-to-r from-stone-800 to-stone-900 py-6 px-8 text-center relative overflow-hidden">
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                  backgroundSize: '20px 20px'
+                }} />
+              </div>
+              <span className={`relative z-10 inline-block px-4 py-1 rounded-full text-xs font-body tracking-wider uppercase ${
+                activeEvent.type === 'engagement' 
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' 
+                  : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+              }`}>
+                {activeEvent.type === 'engagement' ? 'Traditional Ceremony' : 'Wedding Reception'}
+              </span>
+            </div>
+
+            <div className="grid md:grid-cols-2">
+              {/* Map Side */}
+              <div 
+                onClick={() => openMap(activeEvent.mapUrl)}
+                className="relative h-72 md:h-auto min-h-[300px] bg-stone-100 cursor-pointer group overflow-hidden"
+              >
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-stone-100 to-amber-100">
+                  <div className="absolute inset-0 opacity-30">
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#d4af37" strokeWidth="0.5"/>
+                      </pattern>
+                      <rect width="100" height="100" fill="url(#grid)" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Pulsing Pin */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-amber-500 rounded-full animate-ping opacity-20" />
+                    <div className="relative w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                      <MapPin className="w-10 h-10 text-white" />
+                    </div>
+                  </div>
+                  <p className="mt-6 font-script text-2xl text-stone-700 bg-white/90 px-6 py-2 rounded-full shadow-lg">
+                    View on Map
+                  </p>
+                </div>
+
+                {/* Hover Effect */}
+                <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Info Side */}
+              <div className="p-8 md:p-10 flex flex-col justify-center">
+                <div className="space-y-6">
+                  {/* Date Block */}
+                  <div className="text-center md:text-left">
+                    <p className="font-body text-amber-600 text-sm tracking-widest uppercase mb-2">
+                      Save the Date
+                    </p>
+                    <h3 className="font-script text-4xl md:text-5xl text-stone-800 leading-tight">
+                      {activeEvent.date}
+                    </h3>
+                    <p className="font-body text-stone-500 text-lg mt-1 flex items-center justify-center md:justify-start gap-2">
+                      <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                      {activeEvent.time}
+                    </p>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-24 h-px bg-gradient-to-r from-amber-400 to-transparent mx-auto md:mx-0" />
+
+                  {/* Location Block */}
+                  <div className="text-center md:text-left">
+                    <p className="font-body text-stone-400 text-sm tracking-widest uppercase mb-2">
+                      Venue
+                    </p>
+                    <h4 className="font-script text-3xl text-stone-700 mb-1">
+                      {activeEvent.title}
+                    </h4>
+                    <p className="font-body text-stone-600 text-lg">
+                      {activeEvent.location}
+                    </p>
+                    <p className="font-body text-stone-400 text-sm mt-1 italic">
+                      {activeEvent.address}
+                    </p>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button
+                    onClick={() => openMap(activeEvent.mapUrl)}
+                    className="w-full md:w-auto group inline-flex items-center justify-center gap-3 px-8 py-4 bg-stone-800 text-white rounded-xl font-body text-sm tracking-wider uppercase hover:bg-amber-500 transition-all duration-500 shadow-lg hover:shadow-amber-500/30"
+                  >
+                    <Navigation className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
+                    Get Directions
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Event Indicator Dots */}
+          <div className="flex justify-center gap-3 mt-8">
+            {eventDetails.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveTab(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  activeTab === index 
+                    ? 'bg-amber-500 w-8' 
+                    : 'bg-stone-300 hover:bg-stone-400'
+                }`}
