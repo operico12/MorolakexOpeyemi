@@ -69,7 +69,7 @@ const Footer = () => {
             }`}
           >
             <h2 className="font-script text-5xl md:text-6xl lg:text-7xl text-white mb-4">
-              Megan <span className="text-gold">&</span> John
+              Morolake <span className="text-gold">&</span> Opeyemi
             </h2>
           </div>
 
@@ -97,7 +97,16 @@ const Footer = () => {
             "Two souls, one heart, forever intertwined"
           </p>
         </div>
-
+   {/* Quote */}
+          <p
+            className={`font-script text-2xl md:text-3xl text-white/60 max-w-xl mx-auto transition-all duration-800 custom-ease-out ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionDelay: '200ms' }}
+          >
+            "#MoLoveStory2026"
+          </p>
+        </div>
         {/* Navigation */}
         <nav
           className={`flex flex-wrap justify-center gap-6 md:gap-10 mb-12 transition-all duration-800 custom-ease-out ${
@@ -136,7 +145,7 @@ const Footer = () => {
           </p>
           <span className="hidden md:block">•</span>
           <p className="font-body text-sm">
-            © 2025 Megan & John. All rights reserved.
+            © 2025 Morolake & Opeyemi. All rights reserved.
           </p>
         </div>
       </div>
