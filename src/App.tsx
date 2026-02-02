@@ -6,6 +6,7 @@ import Countdown from './sections/Countdown';
 import OurStory from './sections/OurStory';
 import WeddingDetails from './sections/WeddingDetails';
 import Gallery from './sections/Gallery';
+import VenueTravel from './sections/VenueTravel'; // ← ADD THIS LINE
 import RSVP from './sections/RSVP';
 import Footer from './sections/Footer';
 import './App.css';
@@ -56,6 +57,7 @@ function App() {
           <OurStory />
           <WeddingDetails />
           <Gallery />
+          <VenueTravel /> {/* ← ADD THIS LINE */}
           <RSVP />
         </main>
         <Footer />
