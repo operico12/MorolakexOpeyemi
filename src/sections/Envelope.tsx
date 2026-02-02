@@ -9,7 +9,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
   const [isOpening, setIsOpening] = useState(false);
   const [sealBroken, setSealBroken] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [ripples, setRipples] = useState<{id: number, x: number, y: number}[]);
+  const [ripples, setRipples] = useState<{id: number, x: number, y: number}[]>([]);  // ✅ Fixed
   const envelopeRef = useRef<HTMLDivElement>(null);
 
   const handleOpen = (e: React.MouseEvent) => {
