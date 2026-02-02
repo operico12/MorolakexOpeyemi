@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Heart, Send, Check, User, Mail, Phone, Users, MessageSquare, ChevronDown } from 'lucide-react'; // Added ChevronDown
+import { Heart, Send, Check, User, Mail, Phone, Users, MessageSquare } from 'lucide-react'; 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
