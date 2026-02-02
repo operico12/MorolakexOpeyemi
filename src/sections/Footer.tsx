@@ -96,17 +96,18 @@ const Footer = () => {
           >
             "Two souls, one heart, forever intertwined"
           </p>
-        </div>
-   {/* Quote */}
+
+          {/* Hashtag - Styled differently */}
           <p
-            className={`font-script text-2xl md:text-3xl text-white/60 max-w-xl mx-auto transition-all duration-800 custom-ease-out ${
+            className={`font-body text-lg md:text-xl text-gold/80 max-w-xl mx-auto mt-4 transition-all duration-800 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            style={{ transitionDelay: '200ms' }}
+            style={{ transitionDelay: '250ms' }}
           >
-            "#MoLoveStory2026"
+            #MoLoveStory2026
           </p>
         </div>
+
         {/* Navigation */}
         <nav
           className={`flex flex-wrap justify-center gap-6 md:gap-10 mb-12 transition-all duration-800 custom-ease-out ${
