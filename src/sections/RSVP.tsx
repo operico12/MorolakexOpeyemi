@@ -19,6 +19,7 @@ const RSVP = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone number: '',
     guests: '',
     message: '',
   });
@@ -163,6 +164,28 @@ const RSVP = () => {
                   type="email"
                   placeholder="Enter your email"
                   value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="bg-white border-gray-3 focus:border-gold focus:ring-gold/20 font-body transition-all duration-300"
+                />
+              </div>
+               {/* phone number Field */}
+              <div
+                className={`space-y-2 transition-all duration-500 ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}
+                style={{ transitionDelay: '500ms' }}
+              >
+                <Label htmlFor="phone" className="font-body text-gray-1 flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-gold" />
+                 phone number
+                </Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={formData.phone}
                   onChange={handleInputChange}
                   required
                   className="bg-white border-gray-3 focus:border-gold focus:ring-gold/20 font-body transition-all duration-300"
