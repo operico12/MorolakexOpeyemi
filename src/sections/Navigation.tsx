@@ -7,6 +7,7 @@ const navLinks = [
   { label: 'Our Story', href: '#our-story' },
   { label: 'Details', href: '#details' },
   { label: 'Gallery', href: '#gallery' },
+  { label: 'Venue', href: '#venue' }, // ← ADDED THIS LINE
   { label: 'RSVP', href: '#rsvp' },
 ];
 
@@ -164,7 +165,7 @@ const Navigation = () => {
                 <span className="font-script text-2xl">Morolake & Opeyemi</span>
               </div>
               <p className="font-body text-sm text-gray-2 mt-2">
-                June 20, 2025
+                October 24, 2026
               </p>
             </div>
           </div>
