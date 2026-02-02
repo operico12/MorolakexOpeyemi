@@ -18,7 +18,7 @@ const eventDetails: EventDay[] = [
     time: '10:00 AM',
     location: 'Akure, Ondo State',
     address: 'Julie Jane Event Center, Akure',
-    mapUrl: 'https://www.google.com/maps/place/Julie+Jane+Event+Center/@7.2880875,5.1581907,17z/data=!3m1!4b1!4m6!3m5!1s0x10478f5519e29afb:0x5c09312158591d8f!8m2!3d7.2880875!4d5.1607656!16s%2Fg%2F11v3gd8mc9?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D',
+    mapUrl: 'https://www.google.com/maps/place/Julie+Jane+Event+Center/@7.2880875,5.1581907,17z',
     type: 'engagement',
   },
   {
@@ -27,7 +27,7 @@ const eventDetails: EventDay[] = [
     time: '2:00 PM',
     location: 'Akure, Ondo State',
     address: 'Amazing Place Event Centre, Akure',
-    mapUrl: 'https://www.google.com/maps/place/Amazing+Place+Event+Centre/@7.2266296,5.2122405,17z/data=!4m14!1m7!3m6!1s0x1047855af4b0f29b:0xf9285a949b2e9360!2sAmazing+Place+Event+Centre!8m2!3d7.2266296!4d5.2148154!16s%2Fg%2F11c0xnd14c!3m5!1s0x1047855af4b0f29b:0xf9285a949b2e9360!8m2!3d7.2266296!4d5.2148154!16s%2Fg%2F11c0xnd14c?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D',
+    mapUrl: 'https://www.google.com/maps/place/Amazing+Place+Event+Centre/@7.2266296,5.2122405,17z',
     type: 'reception',
   },
 ];
@@ -270,3 +270,13 @@ const VenueTravel = () => {
                     ? 'bg-amber-500 w-8' 
                     : 'bg-stone-300 hover:bg-stone-400'
                 }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default VenueTravel;
