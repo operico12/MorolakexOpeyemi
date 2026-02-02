@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Heart, Send, Check, User, Mail, Phone, MessageSquare } from 'lucide-react'; // Removed Users
+import { Heart, Send, Check, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
-// Country codes data - simplified display
 const countryCodes = [
   { code: '+234', country: 'Nigeria', flag: '🇳🇬' },
   { code: '+1', country: 'USA', flag: '🇺🇸' },
@@ -52,7 +51,6 @@ const RSVP = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -94,16 +92,10 @@ const RSVP = () => {
     <section
       ref={sectionRef}
       id="rsvp"
-      className="relative w-full py-16 md:py-20 bg-white overflow-hidden"
+      className="relative w-full py-16 md:py-20 bg-white"
     >
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
-      </div>
-
       <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header - Compact */}
+        {/* Section Header */}
         <div className="text-center mb-8 md:mb-10">
           <div
             className={`flex items-center justify-center gap-3 mb-4 transition-all duration-700 ease-out ${
@@ -111,9 +103,7 @@ const RSVP = () => {
             }`}
           >
             <div className="h-px w-10 bg-amber-500" />
-            <span className="font-body text-amber-500 text-xs tracking-[0.2em] uppercase">
-              RSVP
-            </span>
+            <span className="font-body text-amber-500 text-xs tracking-[0.2em] uppercase">RSVP</span>
             <div className="h-px w-10 bg-amber-500" />
           </div>
 
@@ -136,14 +126,13 @@ const RSVP = () => {
           </p>
         </div>
 
-        {/* RSVP Form Card - Compact */}
+        {/* RSVP Form Card - REMOVED overflow-hidden */}
         <div
           className={`relative bg-gray-50 rounded-xl p-6 md:p-8 shadow-lg transition-all duration-700 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
           style={{ transitionDelay: '300ms' }}
         >
-          {/* Decorative Corner - Smaller */}
           <div className="absolute -top-3 -right-3 text-amber-500">
             <Heart className="w-8 h-8" fill="currentColor" />
           </div>
@@ -196,19 +185,20 @@ const RSVP = () => {
                 />
               </div>
 
-              {/* Phone Number Field - Improved Dropdown */}
+              {/* Phone Number Field - FIXED DROPDOWN */}
               <div
-                className={`space-y-1.5 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 relative z-50 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '550ms' }}
+                ref={dropdownRef}
               >
                 <Label className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <Phone className="w-4 h-4 text-amber-500" />
                   Phone Number
                 </Label>
                 
-                <div className="flex gap-2" ref={dropdownRef}>
+                <div className="flex gap-2">
                   {/* Custom Country Code Dropdown */}
                   <div className="relative">
                     <button
@@ -219,7 +209,7 @@ const RSVP = () => {
                       <span className="text-base">{selectedCountry.flag}</span>
                       <span className="font-body text-sm font-medium">{selectedCountry.code}</span>
                       <svg 
-                        className={`w-4 h-4 text-gray-400 transition-transform ${showCountryDropdown ? 'rotate-180' : ''}`} 
+                        className={`w-4 h-4 text-gray-400 transition-transform ml-auto ${showCountryDropdown ? 'rotate-180' : ''}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -228,9 +218,14 @@ const RSVP = () => {
                       </svg>
                     </button>
 
-                    {/* Dropdown Menu */}
+                    {/* Dropdown Menu - FIXED POSITIONING */}
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+                      <div 
+                        className="fixed left-auto top-auto mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-xl max-h-60 overflow-y-auto"
+                        style={{
+                          zIndex: 9999,
+                        }}
+                      >
                         {countryCodes.map((country) => (
                           <button
                             key={country.code}
@@ -239,13 +234,13 @@ const RSVP = () => {
                               setFormData(prev => ({ ...prev, countryCode: country.code }));
                               setShowCountryDropdown(false);
                             }}
-                            className={`w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-50 transition-colors text-left ${
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 hover:bg-amber-50 transition-colors text-left ${
                               formData.countryCode === country.code ? 'bg-amber-50' : ''
                             }`}
                           >
                             <span className="text-lg">{country.flag}</span>
                             <span className="font-body text-sm font-medium">{country.code}</span>
-                            <span className="font-body text-xs text-gray-500">{country.country}</span>
+                            <span className="font-body text-xs text-gray-500 truncate">{country.country}</span>
                           </button>
                         ))}
                       </div>
@@ -265,9 +260,9 @@ const RSVP = () => {
                 </div>
               </div>
 
-              {/* Message Field - Shorter */}
+              {/* Message Field */}
               <div
-                className={`space-y-1.5 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 relative z-0 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '600ms' }}
@@ -287,9 +282,9 @@ const RSVP = () => {
                 />
               </div>
 
-              {/* Submit Button - Compact */}
+              {/* Submit Button */}
               <div
-                className={`pt-2 transition-all duration-500 ${
+                className={`pt-2 transition-all duration-500 relative z-0 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
                 style={{ transitionDelay: '700ms' }}
@@ -314,15 +309,12 @@ const RSVP = () => {
               </div>
             </form>
           ) : (
-            /* Success State - Compact */
             <div className="text-center py-8">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/10 flex items-center justify-center">
                 <Check className="w-8 h-8 text-amber-500" />
               </div>
               <h3 className="font-script text-3xl text-black mb-2">Thank You!</h3>
-              <p className="font-body text-gray-600 text-sm">
-                We've received your RSVP!
-              </p>
+              <p className="font-body text-gray-600 text-sm">We've received your RSVP!</p>
             </div>
           )}
         </div>
