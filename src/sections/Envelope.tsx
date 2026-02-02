@@ -64,7 +64,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
       <div className="absolute bottom-40 right-32 w-48 h-48 rounded-full border-[6px] border-[#a08060]/10" />
       <div className="absolute top-1/3 right-20 w-24 h-24 rounded-full border-2 border-[#8b7355]/5" />
 
-      {/* Dust Particles */}
+         {/* Dust Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <div
@@ -80,6 +80,27 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
         ))}
       </div>
 
+      {/* ADD THIS: Floating Hearts Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(6)].map((_, i) => (
+          <Heart
+            key={i}
+            className="absolute text-[#d4af37]/10 animate-float"
+            style={{
+              width: `${20 + i * 10}px`,
+              height: `${20 + i * 10}px`,
+              left: `${10 + i * 15}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${4 + i}s`
+            }}
+            fill="currentColor"
+          />
+        ))}
+      </div>
+
+      {/* Vintage Border Frame */}
+      <div className="absolute inset-4 md:inset-8 border border-[#8b7355]/20 rounded-sm">
       {/* Vintage Border Frame */}
       <div className="absolute inset-4 md:inset-8 border border-[#8b7355]/20 rounded-sm">
         <div className="absolute inset-1 border border-[#8b7355]/10" />
