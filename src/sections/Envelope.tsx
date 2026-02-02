@@ -9,7 +9,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
   const [isOpening, setIsOpening] = useState(false);
   const [sealBroken, setSealBroken] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [ripples, setRipples] = useState<{id: number, x: number, y: number}[]>([]);  // ✅ Fixed
+  const [ripples, setRipples] = useState<{id: number, x: number, y: number}[]>([]);
   const envelopeRef = useRef<HTMLDivElement>(null);
 
   const handleOpen = (e: React.MouseEvent) => {
@@ -54,7 +54,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
       <div 
         className="absolute inset-0 opacity-40 mix-blend-multiply"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg '%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
           backgroundSize: '200px 200px'
         }}
       />
@@ -64,7 +64,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
       <div className="absolute bottom-40 right-32 w-48 h-48 rounded-full border-[6px] border-[#a08060]/10" />
       <div className="absolute top-1/3 right-20 w-24 h-24 rounded-full border-2 border-[#8b7355]/5" />
 
-         {/* Dust Particles */}
+      {/* Dust Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <div
@@ -80,7 +80,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
         ))}
       </div>
 
-      {/* ADD THIS: Floating Hearts Background */}
+      {/* Floating Hearts Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(6)].map((_, i) => (
           <Heart
@@ -99,8 +99,6 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
         ))}
       </div>
 
-      {/* Vintage Border Frame */}
-      <div className="absolute inset-4 md:inset-8 border border-[#8b7355]/20 rounded-sm">
       {/* Vintage Border Frame */}
       <div className="absolute inset-4 md:inset-8 border border-[#8b7355]/20 rounded-sm">
         <div className="absolute inset-1 border border-[#8b7355]/10" />
@@ -188,7 +186,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
               <div 
                 className="absolute inset-0 opacity-30 mix-blend-multiply rounded-sm"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg '%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
                 }}
               />
               {/* Age Spots */}
@@ -272,7 +270,7 @@ const Envelope = ({ onOpen }: EnvelopeProps) => {
                   <div 
                     className="absolute inset-0 rounded-full opacity-40 mix-blend-overlay"
                     style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)'/%3E%3C/svg%3E")`
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg '%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)'/%3E%3C/svg%3E")`
                     }}
                   />
                   
