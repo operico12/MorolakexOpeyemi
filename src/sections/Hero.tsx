@@ -70,7 +70,7 @@ const Hero = () => {
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl animate-pulse-soft">
             <img
               src="/images/hero-couple.jpg"
-              alt="Megan and John"
+              alt="Morolake and Opeyemi"
               className="w-full h-full object-cover"
             />
             {/* Gradient Overlay */}
@@ -107,7 +107,7 @@ const Hero = () => {
             
             {/* Main Title */}
             <h1 className="font-script text-6xl md:text-8xl lg:text-9xl text-white mb-6 text-shadow-gold">
-              Megan <span className="text-white/60">&</span> John
+              Morolake <span className="text-white/60">&</span> Opeyemi
             </h1>
             
             {/* Date */}
@@ -119,7 +119,7 @@ const Hero = () => {
             >
               <div className="h-px w-16 bg-white/40" />
               <p className="font-body text-white text-xl md:text-2xl tracking-wider">
-                June 20, 2025
+                October 24, 2026
               </p>
               <div className="h-px w-16 bg-white/40" />
             </div>
