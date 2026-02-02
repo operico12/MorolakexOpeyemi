@@ -1,21 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { Heart, Send, Check, User, Mail, Phone, Users, MessageSquare } from 'lucide-react'; 
+import { Heart, Send, Check, User, Mail, Phone, MessageSquare } from 'lucide-react'; // Removed Users
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
-// Country codes data
+// Country codes data - simplified display
 const countryCodes = [
   { code: '+234', country: 'Nigeria', flag: '🇳🇬' },
-  { code: '+1', country: 'USA/Canada', flag: '🇺🇸' },
+  { code: '+1', country: 'USA', flag: '🇺🇸' },
   { code: '+44', country: 'UK', flag: '🇬🇧' },
   { code: '+91', country: 'India', flag: '🇮🇳' },
   { code: '+27', country: 'South Africa', flag: '🇿🇦' },
@@ -30,15 +23,16 @@ const RSVP = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    countryCode: '+234', // Default to Nigeria
+    countryCode: '+234',
     phone: '',
-    guests: '',
     message: '',
   });
   const sectionRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,15 +52,24 @@ const RSVP = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowCountryDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Combine country code and phone for submission
     const fullPhoneNumber = `${formData.countryCode} ${formData.phone}`;
     console.log('Submitting:', { ...formData, fullPhoneNumber });
     
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     setIsSubmitting(false);
@@ -80,50 +83,42 @@ const RSVP = () => {
     }));
   };
 
-  // Format phone number as user types (optional formatting)
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-numeric characters
-    const cleaned = value.replace(/\D/g, '');
-    return cleaned;
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cleaned = e.target.value.replace(/\D/g, '');
+    setFormData(prev => ({ ...prev, phone: cleaned }));
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(e.target.value);
-    setFormData(prev => ({
-      ...prev,
-      phone: formatted
-    }));
-  };
+  const selectedCountry = countryCodes.find(c => c.code === formData.countryCode) || countryCodes[0];
 
   return (
     <section
       ref={sectionRef}
       id="rsvp"
-      className="relative w-full py-24 md:py-32 bg-white overflow-hidden"
+      className="relative w-full py-16 md:py-20 bg-white overflow-hidden"
     >
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+      <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header - Compact */}
+        <div className="text-center mb-8 md:mb-10">
           <div
-            className={`flex items-center justify-center gap-3 mb-6 transition-all duration-800 ease-out ${
+            className={`flex items-center justify-center gap-3 mb-4 transition-all duration-700 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <div className="h-px w-12 bg-amber-500" />
-            <span className="font-body text-amber-500 text-sm tracking-[0.2em] uppercase">
+            <div className="h-px w-10 bg-amber-500" />
+            <span className="font-body text-amber-500 text-xs tracking-[0.2em] uppercase">
               RSVP
             </span>
-            <div className="h-px w-12 bg-amber-500" />
+            <div className="h-px w-10 bg-amber-500" />
           </div>
 
           <h2
-            className={`font-script text-5xl md:text-6xl lg:text-7xl text-black mb-4 transition-all duration-800 ease-out ${
+            className={`font-script text-4xl md:text-5xl text-black mb-3 transition-all duration-700 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '100ms' }}
@@ -132,40 +127,37 @@ const RSVP = () => {
           </h2>
 
           <p
-            className={`font-body text-gray-600 text-lg transition-all duration-800 ease-out ${
+            className={`font-body text-gray-600 text-base transition-all duration-700 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            Please let us know if you can make it to our special day
+            Please let us know if you can make it
           </p>
         </div>
 
-        {/* RSVP Form Card */}
+        {/* RSVP Form Card - Compact */}
         <div
-          className={`relative bg-gray-50 rounded-2xl p-8 md:p-12 shadow-xl transition-all duration-1000 ease-out ${
+          className={`relative bg-gray-50 rounded-xl p-6 md:p-8 shadow-lg transition-all duration-700 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
-          style={{ 
-            transitionDelay: '300ms',
-            transform: isVisible ? 'perspective(1000px) rotateX(0deg)' : 'perspective(1000px) rotateX(15deg)'
-          }}
+          style={{ transitionDelay: '300ms' }}
         >
-          {/* Decorative Corner */}
-          <div className="absolute -top-4 -right-4 text-amber-500 animate-bounce">
-            <Heart className="w-10 h-10" fill="currentColor" />
+          {/* Decorative Corner - Smaller */}
+          <div className="absolute -top-3 -right-3 text-amber-500">
+            <Heart className="w-8 h-8" fill="currentColor" />
           </div>
 
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name Field */}
               <div
-                className={`space-y-2 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '400ms' }}
               >
-                <Label htmlFor="name" className="font-body text-gray-700 flex items-center gap-2">
+                <Label htmlFor="name" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <User className="w-4 h-4 text-amber-500" />
                   Your Name
                 </Label>
@@ -177,18 +169,18 @@ const RSVP = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body transition-all duration-300"
+                  className="bg-white border-gray-300 focus:border-amber-500 h-10 text-sm"
                 />
               </div>
 
               {/* Email Field */}
               <div
-                className={`space-y-2 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '500ms' }}
               >
-                <Label htmlFor="email" className="font-body text-gray-700 flex items-center gap-2">
+                <Label htmlFor="email" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <Mail className="w-4 h-4 text-amber-500" />
                   Email Address
                 </Label>
@@ -200,47 +192,65 @@ const RSVP = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body transition-all duration-300"
+                  className="bg-white border-gray-300 focus:border-amber-500 h-10 text-sm"
                 />
               </div>
 
-              {/* Phone Number Field with Country Code - NEW */}
+              {/* Phone Number Field - Improved Dropdown */}
               <div
-                className={`space-y-2 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '550ms' }}
               >
-                <Label className="font-body text-gray-700 flex items-center gap-2">
+                <Label className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <Phone className="w-4 h-4 text-amber-500" />
                   Phone Number
                 </Label>
                 
-                <div className="flex gap-2">
-                  {/* Country Code Select */}
-                  <Select
-                    value={formData.countryCode}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, countryCode: value }))}
-                  >
-                    <SelectTrigger className="w-[140px] bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body">
-                      <SelectValue placeholder="Code" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-[300px]">
-                      {countryCodes.map((country) => (
-                        <SelectItem 
-                          key={country.code} 
-                          value={country.code}
-                          className="font-body"
-                        >
-                          <span className="flex items-center gap-2">
-                            <span>{country.flag}</span>
-                            <span className="font-medium">{country.code}</span>
-                            <span className="text-gray-500 text-sm ml-1">({country.country})</span>
-                          </span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="flex gap-2" ref={dropdownRef}>
+                  {/* Custom Country Code Dropdown */}
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                      className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md hover:border-amber-500 transition-colors h-10 min-w-[100px]"
+                    >
+                      <span className="text-base">{selectedCountry.flag}</span>
+                      <span className="font-body text-sm font-medium">{selectedCountry.code}</span>
+                      <svg 
+                        className={`w-4 h-4 text-gray-400 transition-transform ${showCountryDropdown ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {showCountryDropdown && (
+                      <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+                        {countryCodes.map((country) => (
+                          <button
+                            key={country.code}
+                            type="button"
+                            onClick={() => {
+                              setFormData(prev => ({ ...prev, countryCode: country.code }));
+                              setShowCountryDropdown(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-50 transition-colors text-left ${
+                              formData.countryCode === country.code ? 'bg-amber-50' : ''
+                            }`}
+                          >
+                            <span className="text-lg">{country.flag}</span>
+                            <span className="font-body text-sm font-medium">{country.code}</span>
+                            <span className="font-body text-xs text-gray-500">{country.country}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
 
                   {/* Phone Number Input */}
                   <Input
@@ -250,124 +260,82 @@ const RSVP = () => {
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     required
-                    className="flex-1 bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body transition-all duration-300"
+                    className="flex-1 bg-white border-gray-300 focus:border-amber-500 h-10 text-sm"
                   />
                 </div>
-                
-                {/* Display full number preview */}
-                {formData.phone && (
-                  <p className="text-xs text-gray-500 font-body mt-1">
-                    Full number: {formData.countryCode} {formData.phone}
-                  </p>
-                )}
               </div>
 
-              {/* Guests Field */}
+              {/* Message Field - Shorter */}
               <div
-                className={`space-y-2 transition-all duration-500 ${
+                className={`space-y-1.5 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
                 style={{ transitionDelay: '600ms' }}
               >
-                <Label htmlFor="guests" className="font-body text-gray-700 flex items-center gap-2">
-                  <Users className="w-4 h-4 text-amber-500" />
-                  Number of Guests
-                </Label>
-                <Select
-                  value={formData.guests}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, guests: value }))}
-                >
-                  <SelectTrigger className="bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body">
-                    <SelectValue placeholder="Select number of guests" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">Just me</SelectItem>
-                    <SelectItem value="2">2 guests</SelectItem>
-                    <SelectItem value="3">3 guests</SelectItem>
-                    <SelectItem value="4">4 guests</SelectItem>
-                    <SelectItem value="5+">5+ guests</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Message Field */}
-              <div
-                className={`space-y-2 transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}
-                style={{ transitionDelay: '700ms' }}
-              >
-                <Label htmlFor="message" className="font-body text-gray-700 flex items-center gap-2">
+                <Label htmlFor="message" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <MessageSquare className="w-4 h-4 text-amber-500" />
                   Message (Optional)
                 </Label>
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder="Leave a message for the couple..."
+                  placeholder="Leave a message..."
                   value={formData.message}
                   onChange={handleInputChange}
-                  rows={4}
-                  className="bg-white border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 font-body resize-none transition-all duration-300"
+                  rows={3}
+                  className="bg-white border-gray-300 focus:border-amber-500 text-sm resize-none"
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button - Compact */}
               <div
-                className={`pt-4 transition-all duration-500 ${
+                className={`pt-2 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
-                style={{ transitionDelay: '800ms' }}
+                style={{ transitionDelay: '700ms' }}
               >
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-body text-lg py-6 transition-all duration-500 relative overflow-hidden group"
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-body py-5 h-auto"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
-                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       Sending...
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
                       Send RSVP
-                      <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <Send className="w-4 h-4" />
                     </span>
                   )}
                 </Button>
               </div>
             </form>
           ) : (
-            /* Success State */
-            <div className="text-center py-12">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-500/10 flex items-center justify-center animate-bounce">
-                <Check className="w-10 h-10 text-amber-500" />
+            /* Success State - Compact */
+            <div className="text-center py-8">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/10 flex items-center justify-center">
+                <Check className="w-8 h-8 text-amber-500" />
               </div>
-              <h3 className="font-script text-4xl text-black mb-4">
-                Thank You!
-              </h3>
-              <p className="font-body text-gray-600">
-                We've received your RSVP and can't wait to celebrate with you!
+              <h3 className="font-script text-3xl text-black mb-2">Thank You!</h3>
+              <p className="font-body text-gray-600 text-sm">
+                We've received your RSVP!
               </p>
-              {formData.phone && (
-                <p className="font-body text-sm text-gray-500 mt-2">
-                  We'll contact you at {formData.countryCode} {formData.phone}
-                </p>
-              )}
             </div>
           )}
         </div>
 
-        {/* Additional Note */}
+        {/* Updated Date */}
         <div
-          className={`mt-8 text-center transition-all duration-800 ${
+          className={`mt-6 text-center transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
-          style={{ transitionDelay: '900ms' }}
+          style={{ transitionDelay: '800ms' }}
         >
-          <p className="font-body text-sm text-gray-600">
-            Please RSVP by <span className="text-amber-500 font-medium">May 20, 2025</span>
+          <p className="font-body text-xs text-gray-500">
+            Please RSVP by <span className="text-amber-500 font-medium">October 1, 2026</span>
           </p>
         </div>
       </div>
