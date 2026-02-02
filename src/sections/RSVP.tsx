@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Heart, Send, Check, User, Mail, Phone, MessageSquare } from 'lucide-react';
+import { Heart, Send, Check, User, Mail, Phone, MessageSquare, Utensils } from 'lucide-react'; // Added Utensils
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -28,6 +28,8 @@ const RSVP = () => {
     email: '',
     countryCode: '+234',
     phone: '',
+    attendance: '', // 'accept' or 'decline'
+    dietaryRestrictions: '',
     message: '',
   });
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -126,7 +128,7 @@ const RSVP = () => {
           </p>
         </div>
 
-        {/* RSVP Form Card - REMOVED overflow-hidden */}
+        {/* RSVP Form Card */}
         <div
           className={`relative bg-gray-50 rounded-xl p-6 md:p-8 shadow-lg transition-all duration-700 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -148,7 +150,7 @@ const RSVP = () => {
               >
                 <Label htmlFor="name" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <User className="w-4 h-4 text-amber-500" />
-                  Your Name
+                  Your Name <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="name"
@@ -171,7 +173,7 @@ const RSVP = () => {
               >
                 <Label htmlFor="email" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <Mail className="w-4 h-4 text-amber-500" />
-                  Email Address
+                  Email Address <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="email"
@@ -185,7 +187,7 @@ const RSVP = () => {
                 />
               </div>
 
-              {/* Phone Number Field - FIXED DROPDOWN */}
+              {/* Phone Number Field */}
               <div
                 className={`space-y-1.5 transition-all duration-500 relative z-50 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
@@ -195,11 +197,10 @@ const RSVP = () => {
               >
                 <Label className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <Phone className="w-4 h-4 text-amber-500" />
-                  Phone Number
+                  Phone Number <span className="text-red-500">*</span>
                 </Label>
                 
                 <div className="flex gap-2">
-                  {/* Custom Country Code Dropdown */}
                   <div className="relative">
                     <button
                       type="button"
@@ -218,13 +219,10 @@ const RSVP = () => {
                       </svg>
                     </button>
 
-                    {/* Dropdown Menu - FIXED POSITIONING */}
                     {showCountryDropdown && (
                       <div 
                         className="fixed left-auto top-auto mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-xl max-h-60 overflow-y-auto"
-                        style={{
-                          zIndex: 9999,
-                        }}
+                        style={{ zIndex: 9999 }}
                       >
                         {countryCodes.map((country) => (
                           <button
@@ -247,7 +245,6 @@ const RSVP = () => {
                     )}
                   </div>
 
-                  {/* Phone Number Input */}
                   <Input
                     name="phone"
                     type="tel"
@@ -260,12 +257,90 @@ const RSVP = () => {
                 </div>
               </div>
 
+              {/* Attendance - NEW */}
+              <div
+                className={`space-y-3 transition-all duration-500 relative z-0 ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}
+                style={{ transitionDelay: '600ms' }}
+              >
+                <Label className="font-body text-gray-700 text-sm">
+                  Will you be attending? <span className="text-red-500">*</span>
+                </Label>
+                <div className="flex flex-col gap-3">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="relative">
+                      <input
+                        type="radio"
+                        name="attendance"
+                        value="accept"
+                        checked={formData.attendance === 'accept'}
+                        onChange={handleInputChange}
+                        required
+                        className="peer sr-only"
+                      />
+                      <div className="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:bg-amber-500 transition-all" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 peer-checked:opacity-100">
+                        <div className="w-2 h-2 bg-white rounded-full" />
+                      </div>
+                    </div>
+                    <span className="font-body text-sm text-gray-700 group-hover:text-amber-600 transition-colors">
+                      Joyfully Accept
+                    </span>
+                  </label>
+
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="relative">
+                      <input
+                        type="radio"
+                        name="attendance"
+                        value="decline"
+                        checked={formData.attendance === 'decline'}
+                        onChange={handleInputChange}
+                        className="peer sr-only"
+                      />
+                      <div className="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:bg-amber-500 transition-all" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 peer-checked:opacity-100">
+                        <div className="w-2 h-2 bg-white rounded-full" />
+                      </div>
+                    </div>
+                    <span className="font-body text-sm text-gray-700 group-hover:text-amber-600 transition-colors">
+                      Regretfully Decline
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Dietary Restrictions - NEW (Only show if attending) */}
+              {formData.attendance === 'accept' && (
+                <div
+                  className={`space-y-1.5 transition-all duration-500 relative z-0 ${
+                    isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                  }`}
+                  style={{ transitionDelay: '650ms' }}
+                >
+                  <Label htmlFor="dietaryRestrictions" className="font-body text-gray-700 text-sm flex items-center gap-2">
+                    <Utensils className="w-4 h-4 text-amber-500" />
+                    Dietary Restrictions
+                  </Label>
+                  <Input
+                    id="dietaryRestrictions"
+                    name="dietaryRestrictions"
+                    type="text"
+                    placeholder="Vegetarian, vegan, allergies, etc."
+                    value={formData.dietaryRestrictions}
+                    onChange={handleInputChange}
+                    className="bg-white border-gray-300 focus:border-amber-500 h-10 text-sm"
+                  />
+                </div>
+              )}
+
               {/* Message Field */}
               <div
                 className={`space-y-1.5 transition-all duration-500 relative z-0 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
-                style={{ transitionDelay: '600ms' }}
+                style={{ transitionDelay: '700ms' }}
               >
                 <Label htmlFor="message" className="font-body text-gray-700 text-sm flex items-center gap-2">
                   <MessageSquare className="w-4 h-4 text-amber-500" />
@@ -287,7 +362,7 @@ const RSVP = () => {
                 className={`pt-2 transition-all duration-500 relative z-0 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
-                style={{ transitionDelay: '700ms' }}
+                style={{ transitionDelay: '750ms' }}
               >
                 <Button
                   type="submit"
@@ -314,7 +389,9 @@ const RSVP = () => {
                 <Check className="w-8 h-8 text-amber-500" />
               </div>
               <h3 className="font-script text-3xl text-black mb-2">Thank You!</h3>
-              <p className="font-body text-gray-600 text-sm">We've received your RSVP!</p>
+              <p className="font-body text-gray-600 text-sm">
+                We've received your RSVP!
+              </p>
             </div>
           )}
         </div>
