@@ -73,7 +73,7 @@ const Navigation = () => {
                   isScrolled ? 'text-black' : 'text-white'
                 }`}
               >
-                M & J
+                M & O
               </span>
             </button>
 
@@ -161,7 +161,7 @@ const Navigation = () => {
             <div className="mt-auto">
               <div className="flex items-center gap-3 text-gold">
                 <Heart className="w-5 h-5" fill="currentColor" />
-                <span className="font-script text-2xl">Megan & John</span>
+                <span className="font-script text-2xl">Morolake & Opeyemi</span>
               </div>
               <p className="font-body text-sm text-gray-2 mt-2">
                 June 20, 2025
