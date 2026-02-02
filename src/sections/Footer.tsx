@@ -82,7 +82,7 @@ const Footer = () => {
           >
             <div className="h-px w-16 bg-gold/40" />
             <p className="font-body text-gold text-lg tracking-wider">
-              June 20, 2025
+              October 24, 2026
             </p>
             <div className="h-px w-16 bg-gold/40" />
           </div>
@@ -146,7 +146,7 @@ const Footer = () => {
           </p>
           <span className="hidden md:block">•</span>
           <p className="font-body text-sm">
-            © 2025 Morolake & Opeyemi. All rights reserved.
+            © 2026 Morolake & Opeyemi. All rights reserved.
           </p>
         </div>
       </div>
