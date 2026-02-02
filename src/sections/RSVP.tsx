@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Heart, Send, Check, User, Mail, Users, MessageSquare } from 'lucide-react';
+import { Heart, Send, Check, User, Mail, Phone, Users, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,7 +19,7 @@ const RSVP = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone number: '',
+    phone: '',       // ✅ added
     guests: '',
     message: '',
   });
@@ -46,10 +46,10 @@ const RSVP = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
@@ -112,7 +112,7 @@ const RSVP = () => {
           className={`relative bg-gray-4 rounded-2xl p-8 md:p-12 shadow-xl transition-all duration-1000 custom-ease-out ${
             isVisible ? 'opacity-100 translate-y-0 rotate-x-0' : 'opacity-0 translate-y-12'
           }`}
-          style={{ 
+          style={{
             transitionDelay: '300ms',
             transform: isVisible ? 'perspective(1000px) rotateX(0deg)' : 'perspective(1000px) rotateX(15deg)'
           }}
@@ -169,22 +169,23 @@ const RSVP = () => {
                   className="bg-white border-gray-3 focus:border-gold focus:ring-gold/20 font-body transition-all duration-300"
                 />
               </div>
-               {/* phone number Field */}
+
+              {/* ✅ Phone Field (NEW) */}
               <div
                 className={`space-y-2 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                 }`}
-                style={{ transitionDelay: '500ms' }}
+                style={{ transitionDelay: '550ms' }}
               >
                 <Label htmlFor="phone" className="font-body text-gray-1 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-gold" />
-                 phone number
+                  <Phone className="w-4 h-4 text-gold" />
+                  Phone Number
                 </Label>
                 <Input
                   id="phone"
                   name="phone"
                   type="tel"
-                  placeholder="Enter your phone number"
+                  placeholder="e.g. +1 604 123 4567"
                   value={formData.phone}
                   onChange={handleInputChange}
                   required
