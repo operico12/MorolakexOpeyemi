@@ -18,8 +18,8 @@ const Countdown = () => {
   });
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Wedding date: June 20, 2025
-  const weddingDate = new Date('2025-06-20T14:00:00');
+  // Wedding date: October 24, 2026
+  const weddingDate = new Date('2026-10-24T14:00:00');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -199,7 +199,7 @@ const Countdown = () => {
           <div className="inline-flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-full px-8 py-4 border border-white/20">
             <Heart className="w-5 h-5 text-white" fill="currentColor" />
             <span className="font-body text-white text-lg">
-              June 20, 2025 at 2:00 PM
+              October 24, 2026 at 2:00 PM
             </span>
             <Heart className="w-5 h-5 text-white" fill="currentColor" />
           </div>
